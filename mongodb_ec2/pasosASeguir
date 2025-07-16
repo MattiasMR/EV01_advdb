@@ -1,0 +1,36 @@
+# instalar mongo
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
+   --dearmor
+
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo systemctl start mongod
+
+sudo systemctl enable mongod
+
+
+# traer proyecto
+git init
+git remote add origin https://github.com/MattiasMR/EV01_advdb.git
+git config core.sparseCheckout true
+echo "mongodb_ec2/*" > .git/info/sparse-checkout
+git pull origin main
+
+cd mongodb_ec2/
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+
+nvm install 18
+npm install
+
+node seed.js
+node server.js
+

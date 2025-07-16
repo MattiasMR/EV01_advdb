@@ -1,21 +1,20 @@
-// db.js
-require('dotenv').config();
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
-const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
+const url = process.env.MONGODB_URL|| 'mongodb://127.0.0.1:27017';
 const dbName = process.env.DB_NAME || 'veterinaria';
-
-let cachedClient = null;
-let cachedDb = null;
+let client, db;
 
 async function connect() {
-  if (cachedDb) return cachedDb;
-  if (!cachedClient) {
-    cachedClient = new MongoClient(uri);
-    await cachedClient.connect();
-  }
-  cachedDb = cachedClient.db(dbName);
-  return cachedDb;
+  if (db) return db;
+  client = new MongoClient(url);
+  await client.connect();
+  db = client.db(dbName);
+  console.log(`🟢 Mongo conectado a ${dbName}`);
+  return db;
 }
+
+// Conecta inmediatamente al arrancar
+connect().catch(err => console.error('🔴 Mongo error', err));
 
 module.exports = { connect };

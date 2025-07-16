@@ -1,7 +1,13 @@
 // server.js
 require('dotenv').config();
+require('./db');            
+
 const express = require('express');
+const morgan  = require('morgan');
+
 const app = express();
+app.use(express.json());
+app.use(morgan('dev'));      
 
 // Importa tus controladores
 const medicoCtrl   = require('./medico');
@@ -38,5 +44,12 @@ app.get    ('/paciente/:id/vacunas',       busqCtrl.vacunasPaciente);
 app.get    ('/procedimientos/ranking',     busqCtrl.rankingProcedimientos);
 
 // Levanta el servidor
+app.use((err, req, res, _next) => {
+  console.error(err);
+  res.status(err.status||500).json({ ok: false, error: err.message });
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Servidor corriendo en puerto ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => 
+  console.log(`🚀 API escuchando en 0.0.0.0:${PORT}`)
+);
