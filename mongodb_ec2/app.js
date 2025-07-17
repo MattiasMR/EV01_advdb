@@ -17,6 +17,10 @@ const busqCtrl     = require('./busquedas');
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('API de Veterinaria en MongoDB');
+});
+
 // --- PACIENTES ---
 app.post   ('/paciente',                   pacienteCtrl.createPaciente);
 app.get    ('/paciente',                   pacienteCtrl.getPacientes);
