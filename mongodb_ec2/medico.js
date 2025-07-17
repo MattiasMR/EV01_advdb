@@ -128,33 +128,33 @@ exports.updateMedico = async (req, res) => {
 exports.updateEstadoMedico = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado } = req.body;
-    
-    if (!['ACTIVO', 'INACTIVO'].includes(estado)) {
-      return res.status(400).json({ 
-        ok: false, 
-        error: 'Estado debe ser ACTIVO o INACTIVO' 
-      });
-    }
     
     const db = await connect();
-    const result = await db.collection(MEDICOTABLE).updateOne(
-      { idMedico: id },
-      { $set: { estado } }
-    );
     
-    if (result.matchedCount === 0) {
+    // Primero obtener el médico actual para conocer su estado
+    const medico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    
+    if (!medico) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Médico no encontrado' 
       });
     }
 
+    // Toggle del estado: si es ACTIVO -> INACTIVO, si es INACTIVO -> ACTIVO
+    const nuevoEstado = medico.estado === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO';
+    
+    // Actualizar el estado
+    await db.collection(MEDICOTABLE).updateOne(
+      { idMedico: id },
+      { $set: { estado: nuevoEstado } }
+    );
+
     const updatedMedico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
     
     res.json({ 
       ok: true,
-      message: `Médico ${estado.toLowerCase()} exitosamente`,
+      message: `Médico cambiado a ${nuevoEstado.toLowerCase()} exitosamente`,
       data: updatedMedico
     });
   } catch (error) {
