@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { connect } = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
 const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
@@ -24,12 +24,10 @@ exports.createMedico = async (req, res) => {
     const db = await connect();
     const idMedico = uuidv4();
     
-    await db.collection(MEDICOTABLE).insertOne({ 
-      idMedico, 
-      nombre, 
-      especialidad, 
-      estado 
-    });
+    await db.execute(`
+      INSERT INTO ${MEDICOTABLE} (idMedico, nombre, especialidad, estado) 
+      VALUES (?, ?, ?, ?)
+    `, [idMedico, nombre, especialidad, estado]);
 
     res.status(201).json({ 
       ok: true,
@@ -48,12 +46,19 @@ exports.createMedico = async (req, res) => {
 exports.getMedicos = async (req, res) => {
   try {
     const db = await connect();
-    const items = await db.collection(MEDICOTABLE).find().toArray();
+    
+    const result = await db.execute(`SELECT * FROM ${MEDICOTABLE}`);
+    const medicos = result.rows.map(row => ({
+      idMedico: row.idmedico.toString(),
+      nombre: row.nombre,
+      especialidad: row.especialidad,
+      estado: row.estado
+    }));
     
     res.json({ 
       ok: true,
-      data: items,
-      total: items.length
+      data: medicos,
+      total: medicos.length
     });
   } catch (error) {
     console.error('Error obteniendo médicos:', error);
@@ -68,18 +73,27 @@ exports.getMedico = async (req, res) => {
   try {
     const { id } = req.params;
     const db = await connect();
-    const item = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
     
-    if (!item) {
+    const result = await db.execute(`
+      SELECT * FROM ${MEDICOTABLE} WHERE idMedico = ?
+    `, [id]);
+    
+    if (result.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Médico no encontrado' 
       });
     }
 
+    const medico = result.rows[0];
     res.json({ 
       ok: true,
-      data: item
+      data: {
+        idMedico: medico.idmedico.toString(),
+        nombre: medico.nombre,
+        especialidad: medico.especialidad,
+        estado: medico.estado
+      }
     });
   } catch (error) {
     console.error('Error obteniendo médico:', error);
@@ -96,24 +110,39 @@ exports.updateMedico = async (req, res) => {
     const { nombre, especialidad, estado } = req.body;
     
     const db = await connect();
-    const result = await db.collection(MEDICOTABLE).updateOne(
-      { idMedico: id },
-      { $set: { nombre, especialidad, estado } }
-    );
     
-    if (result.matchedCount === 0) {
+    const existsResult = await db.execute(`
+      SELECT idMedico FROM ${MEDICOTABLE} WHERE idMedico = ?
+    `, [id]);
+    
+    if (existsResult.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Médico no encontrado' 
       });
     }
 
-    const updatedMedico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    await db.execute(`
+      UPDATE ${MEDICOTABLE} 
+      SET nombre = ?, especialidad = ?, estado = ?
+      WHERE idMedico = ?
+    `, [nombre, especialidad, estado, id]);
+
+    const updatedResult = await db.execute(`
+      SELECT * FROM ${MEDICOTABLE} WHERE idMedico = ?
+    `, [id]);
     
+    const updatedMedico = updatedResult.rows[0];
+
     res.json({ 
       ok: true,
       message: 'Médico actualizado exitosamente',
-      data: updatedMedico
+      data: {
+        idMedico: updatedMedico.idmedico.toString(),
+        nombre: updatedMedico.nombre,
+        especialidad: updatedMedico.especialidad,
+        estado: updatedMedico.estado
+      }
     });
   } catch (error) {
     console.error('Error actualizando médico:', error);
@@ -130,28 +159,42 @@ exports.updateEstadoMedico = async (req, res) => {
     
     const db = await connect();
     
-    const medico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    const medicoResult = await db.execute(`
+      SELECT * FROM ${MEDICOTABLE} WHERE idMedico = ?
+    `, [id]);
     
-    if (!medico) {
+    if (medicoResult.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Médico no encontrado' 
       });
     }
 
+    const medico = medicoResult.rows[0];
+    
     const nuevoEstado = medico.estado === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO';
     
-    await db.collection(MEDICOTABLE).updateOne(
-      { idMedico: id },
-      { $set: { estado: nuevoEstado } }
-    );
+    await db.execute(`
+      UPDATE ${MEDICOTABLE} 
+      SET estado = ?
+      WHERE idMedico = ?
+    `, [nuevoEstado, id]);
 
-    const updatedMedico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    const updatedResult = await db.execute(`
+      SELECT * FROM ${MEDICOTABLE} WHERE idMedico = ?
+    `, [id]);
+    
+    const updatedMedico = updatedResult.rows[0];
     
     res.json({ 
       ok: true,
       message: `Médico cambiado a ${nuevoEstado.toLowerCase()} exitosamente`,
-      data: updatedMedico
+      data: {
+        idMedico: updatedMedico.idmedico.toString(),
+        nombre: updatedMedico.nombre,
+        especialidad: updatedMedico.especialidad,
+        estado: updatedMedico.estado
+      }
     });
   } catch (error) {
     console.error('Error actualizando estado del médico:', error);

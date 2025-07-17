@@ -8,15 +8,16 @@ const app = express();
 app.use(express.json());
 app.use(morgan('dev'));      
 
-const medicoCtrl   = require('./medico');
-const pacienteCtrl = require('./paciente');
-const tutorCtrl    = require('./tutor');
-const busqCtrl     = require('./busquedas');
+const medicoCtrl   = require('./controllers/medico');
+const pacienteCtrl = require('./controllers/paciente');
+const tutorCtrl    = require('./controllers/tutor');
+const busqCtrl     = require('./controllers/busquedas');
 
 app.get('/', (req, res) => {
   res.json({ 
-    message: 'API de Veterinaria en MongoDB',
+    message: 'API de Veterinaria en Apache Cassandra',
     version: '1.0.0',
+    database: 'Cassandra',
     endpoints: {
       tutores: '/tutor',
       pacientes: '/paciente', 
@@ -65,5 +66,5 @@ app.use('*', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => 
-  console.log(`API escuchando en 0.0.0.0:${PORT}`)
+  console.log(`API Cassandra escuchando en 0.0.0.0:${PORT}`)
 );

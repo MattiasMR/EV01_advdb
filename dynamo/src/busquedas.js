@@ -2,15 +2,6 @@ const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const FICHACLINICATABLE = process.env.FICHACLINICATABLE;
-const MEDICOTABLE = process.env.MEDICOTABLE;
-
-/* ------------------------------------------------------------------
- * 1) FICHA CLINICA DE UNA MASCOTA
- *    - Ficha médica completa con datos clásicos de revisión médica
- *    - Incluye peso, presión, temperatura, fecha, hora, médico
- *    - Vacunas, procedimientos con medicamentos
- *    GET /paciente/{id}/fichaClinica
- * -----------------------------------------------------------------*/
 
 exports.fichaClinicaPaciente = async (event) => {
   const { id } = event.pathParameters;
@@ -61,12 +52,6 @@ exports.fichaClinicaPaciente = async (event) => {
   };
 };
 
-/* ------------------------------------------------------------------
- * 2) RANKING DE PROCEDIMIENTOS (populares y $)
- *    - Agrega en memoria porque Dynamo no hace GROUP BY
- *    - Usa el GSI 'ProcedimientoIndex' para proyectar solo lo necesario
- *    GET /procedimientos/ranking?top=5
- * -----------------------------------------------------------------*/
 exports.rankingProcedimientos = async (event) => {
   const limit = Number((event.queryStringParameters || {}).top) || 5;
   const stats = {};            
@@ -97,11 +82,7 @@ exports.rankingProcedimientos = async (event) => {
   return { statusCode: 200, body: JSON.stringify(ranking) };
 };
 
-/* ------------------------------------------------------------------
- * 3) VACUNAS AL DÍA DEL PACIENTE
- *    - Devuelve conjunto único de vacunas aplicadas
- *    GET /paciente/{id}/vacunas
- * -----------------------------------------------------------------*/
+
 exports.vacunasPaciente = async (event) => {
   const { id } = event.pathParameters;
   const out = await dynamodb.query({
@@ -117,11 +98,7 @@ exports.vacunasPaciente = async (event) => {
   return { statusCode: 200, body: JSON.stringify([...set]) };
 };
 
-/* ------------------------------------------------------------------
- * 4) HISTORIAL DEL PACIENTE
- *    - Devuelve tanto el listado de todos los procedimientos y consultas médicas del paciente, como el costo pagado por el tutor de cada una
- *    GET /paciente/{id}/historial
- * -----------------------------------------------------------------*/
+
 
 exports.historialPaciente = async (event) => {
   const { id } = event.pathParameters;

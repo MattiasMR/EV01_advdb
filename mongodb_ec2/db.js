@@ -10,11 +10,10 @@ async function connect() {
   client = new MongoClient(url);
   await client.connect();
   db = client.db(dbName);
-  console.log(`🟢 Mongo conectado a ${dbName}`);
+  console.log(`Mongo conectado a ${dbName}`);
   return db;
 }
 
-// Conecta inmediatamente al arrancar
-connect().catch(err => console.error('🔴 Mongo error', err));
+connect().catch(err => console.error('Mongo error', err));
 
 module.exports = { connect };

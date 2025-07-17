@@ -1,4 +1,3 @@
-// seed.js - ESTRUCTURA EXACTA DE DYNAMODB
 require('dotenv').config();
 const { connect } = require('./db');
 const { faker } = require('@faker-js/faker');
@@ -6,7 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 
 const nRegistros = 600; // Número de registros a generar
 
-// Catálogos exactos de DynamoDB
 const medicamentos = Array.from({ length: 30 }).map(() => ({
   idMedicamento: uuidv4(),
   nombre: faker.science.chemicalElement().name + ' ' +
@@ -34,7 +32,7 @@ const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
 const FICHACLINICATABLE = process.env.FICHACLINICATABLE || 'FichaClinica';
 
 async function limpiarColecciones() {
-  console.log('🧹 Limpiando colecciones...');
+  console.log('Limpiando colecciones...');
   const db = await connect();
   
   await Promise.all([
@@ -49,7 +47,6 @@ async function generarDatos() {
   console.log('📊 Generando datos con estructura DynamoDB...');
   const db = await connect();
 
-  // Generar n tutores - ESTRUCTURA EXACTA
   const tutores = Array.from({ length: nRegistros }).map(() => ({
     idTutor: uuidv4(),
     nombre: faker.person.fullName(),
@@ -58,7 +55,6 @@ async function generarDatos() {
     email: faker.internet.email()
   }));
 
-  // Generar n pacientes - ESTRUCTURA EXACTA
   const pacientes = Array.from({ length: nRegistros }).map(() => {
     const tutor = faker.helpers.arrayElement(tutores);
     const especie = faker.animal.type();
@@ -74,7 +70,6 @@ async function generarDatos() {
     };
   });
 
-  // Generar n médicos - ESTRUCTURA EXACTA
   const especialidades = ['Cirugía', 'Dermatología', 'Odontología', 'Cardiología', 'Neurología', 'Oncología', 'Oftalmología'];
   const medicos = Array.from({ length: nRegistros }).map(() => ({
     idMedico: uuidv4(),
@@ -83,7 +78,6 @@ async function generarDatos() {
     estado: faker.helpers.arrayElement(['ACTIVO', 'INACTIVO']),
   }));
 
-  // Generar fichas clínicas - ESTRUCTURA EXACTA DE DYNAMODB
   const fichas = [];
   pacientes.forEach(p => {
     const n = faker.number.int({ min: 1, max: 5 });
@@ -103,7 +97,7 @@ async function generarDatos() {
         );
         
         procedimientosRevision.push({
-          procedimiento: proc.nombre, // USAR 'procedimiento' NO 'nombre'
+          procedimiento: proc.nombre, 
           costo: faker.number.int({ min: 15000, max: 150000 }),
           medicamentos: proc.nombre === 'Consulta general' ? [] : 
             faker.helpers.arrayElements(medicamentos.map(m => m.nombre), { min: 1, max: 3 }),
@@ -115,35 +109,33 @@ async function generarDatos() {
         });
       }
 
-      // ESTRUCTURA EXACTA DE FICHA CLINICA DYNAMODB
       fichas.push({
         idPaciente: p.idPaciente,          
-        fechaHora: fecha.toISOString().split('.')[0], // USAR 'fechaHora' NO 'fecha'
+        fechaHora: fecha.toISOString().split('.')[0], 
         idTutor: p.idTutor,
         costoConsulta: faker.number.int({ min: 25000, max: 50000 }), // Costo base de la consulta
         pesoKg: faker.number.float({ min: 2, max: 80, fractionDigits: 2 }),
         tempC: faker.number.float({ min: 37.5, max: 41, fractionDigits: 2 }),
         presion: `${faker.number.int({ min: 90, max: 160 })}/` + `${faker.number.int({ min: 60, max: 100 })}`,
-        vacunas: faker.helpers.arrayElements(vacunas.map(v => v.nombre), { min: 0, max: 2 }), // STRINGS SIMPLES
+        vacunas: faker.helpers.arrayElements(vacunas.map(v => v.nombre), { min: 0, max: 2 }), 
         procedimientos: procedimientosRevision
       });
     }
   });
 
-  // Insertar datos
-  console.log('📝 Insertando tutores...');
+  console.log('Insertando tutores...');
   await db.collection(TUTORTABLE).insertMany(tutores);
   
-  console.log('📝 Insertando pacientes...');
+  console.log('Insertando pacientes...');
   await db.collection(PACIENTETABLE).insertMany(pacientes);
   
-  console.log('📝 Insertando médicos...');
+  console.log('Insertando médicos...');
   await db.collection(MEDICOTABLE).insertMany(medicos);
   
-  console.log('📝 Insertando fichas clínicas...');
+  console.log('Insertando fichas clínicas...');
   await db.collection(FICHACLINICATABLE).insertMany(fichas);
 
-  console.log(`✅ Seed completo con estructura DynamoDB:
+  console.log(`Seed completo:
     - ${tutores.length} tutores
     - ${pacientes.length} pacientes
     - ${medicos.length} médicos
@@ -155,10 +147,10 @@ async function generarDatos() {
   try {
     await limpiarColecciones();
     await generarDatos();
-    console.log('🎉 Proceso completado exitosamente');
+    console.log('Proceso completado exitosamente');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error durante el poblado:', error);
+    console.error('Error durante el poblado:', error);
     process.exit(1);
   }
 })();

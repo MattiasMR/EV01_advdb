@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { connect } = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
@@ -42,8 +42,11 @@ exports.createPaciente = async (req, res) => {
 
     const db = await connect();
     
-    const tutor = await db.collection(TUTORTABLE).findOne({ idTutor });
-    if (!tutor) {
+    const tutorResult = await db.execute(`
+      SELECT nombre FROM ${TUTORTABLE} WHERE idTutor = ?
+    `, [idTutor]);
+    
+    if (tutorResult.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Tutor no encontrado' 
@@ -51,19 +54,22 @@ exports.createPaciente = async (req, res) => {
     }
 
     const idPaciente = uuidv4();
-    await db.collection(PACIENTETABLE).insertOne({
-      idPaciente, 
-      idTutor, 
-      nombre,
-      especie, 
-      raza, 
-      sexo
-    });
+    await db.execute(`
+      INSERT INTO ${PACIENTETABLE} (idPaciente, idTutor, nombre, especie, raza, sexo)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `, [idPaciente, idTutor, nombre, especie, raza, sexo]);
 
     res.status(201).json({ 
       ok: true,
       message: 'Paciente Creado', 
-      data: { idPaciente, nombre, especie, raza, sexo, tutor: tutor.nombre }
+      data: { 
+        idPaciente, 
+        nombre, 
+        especie, 
+        raza, 
+        sexo, 
+        tutor: tutorResult.rows[0].nombre 
+      }
     });
   } catch (error) {
     console.error('Error creando paciente:', error);
@@ -77,12 +83,21 @@ exports.createPaciente = async (req, res) => {
 exports.getPacientes = async (req, res) => {
   try {
     const db = await connect();
-    const items = await db.collection(PACIENTETABLE).find().toArray();
+    
+    const result = await db.execute(`SELECT * FROM ${PACIENTETABLE}`);
+    const pacientes = result.rows.map(row => ({
+      idPaciente: row.idpaciente.toString(),
+      idTutor: row.idtutor.toString(),
+      nombre: row.nombre,
+      especie: row.especie,
+      raza: row.raza,
+      sexo: row.sexo
+    }));
     
     res.json({ 
       ok: true,
-      data: items,
-      total: items.length
+      data: pacientes,
+      total: pacientes.length
     });
   } catch (error) {
     console.error('Error obteniendo pacientes:', error);
@@ -97,22 +112,34 @@ exports.getPaciente = async (req, res) => {
   try {
     const { id } = req.params;
     const db = await connect();
-    const paciente = await db.collection(PACIENTETABLE).findOne({ idPaciente: id });
     
-    if (!paciente) {
+    const pacienteResult = await db.execute(`
+      SELECT * FROM ${PACIENTETABLE} WHERE idPaciente = ?
+    `, [id]);
+    
+    if (pacienteResult.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Paciente no encontrado' 
       });
     }
 
-    const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: paciente.idTutor });
+    const paciente = pacienteResult.rows[0];
+
+    const tutorResult = await db.execute(`
+      SELECT nombre FROM ${TUTORTABLE} WHERE idTutor = ?
+    `, [paciente.idtutor.toString()]);
 
     res.json({ 
       ok: true,
       data: {
-        ...paciente,
-        tutor: tutor ? tutor.nombre : 'No encontrado'
+        idPaciente: paciente.idpaciente.toString(),
+        idTutor: paciente.idtutor.toString(),
+        nombre: paciente.nombre,
+        especie: paciente.especie,
+        raza: paciente.raza,
+        sexo: paciente.sexo,
+        tutor: tutorResult.rows.length > 0 ? tutorResult.rows[0].nombre : 'No encontrado'
       }
     });
   } catch (error) {
@@ -130,24 +157,41 @@ exports.updatePaciente = async (req, res) => {
     const { nombre, especie, raza, sexo } = req.body;
     
     const db = await connect();
-    const result = await db.collection(PACIENTETABLE).updateOne(
-      { idPaciente: id },
-      { $set: { nombre, especie, raza, sexo } }
-    );
     
-    if (result.matchedCount === 0) {
+    const existsResult = await db.execute(`
+      SELECT idPaciente FROM ${PACIENTETABLE} WHERE idPaciente = ?
+    `, [id]);
+    
+    if (existsResult.rows.length === 0) {
       return res.status(404).json({ 
         ok: false, 
         error: 'Paciente no encontrado' 
       });
     }
 
-    const updatedPaciente = await db.collection(PACIENTETABLE).findOne({ idPaciente: id });
+    await db.execute(`
+      UPDATE ${PACIENTETABLE} 
+      SET nombre = ?, especie = ?, raza = ?, sexo = ?
+      WHERE idPaciente = ?
+    `, [nombre, especie, raza, sexo, id]);
+
+    const updatedResult = await db.execute(`
+      SELECT * FROM ${PACIENTETABLE} WHERE idPaciente = ?
+    `, [id]);
     
+    const updatedPaciente = updatedResult.rows[0];
+
     res.json({ 
       ok: true,
       message: 'Paciente actualizado exitosamente',
-      data: updatedPaciente
+      data: {
+        idPaciente: updatedPaciente.idpaciente.toString(),
+        idTutor: updatedPaciente.idtutor.toString(),
+        nombre: updatedPaciente.nombre,
+        especie: updatedPaciente.especie,
+        raza: updatedPaciente.raza,
+        sexo: updatedPaciente.sexo
+      }
     });
   } catch (error) {
     console.error('Error actualizando paciente:', error);

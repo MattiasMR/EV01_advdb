@@ -25,6 +25,7 @@ cd mongodb_ec2/
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
+# cada vez que reinica la instancia pa tener node
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 
@@ -32,5 +33,10 @@ nvm install 18
 npm install
 
 node seed.js
-node server.js
+node app.js
 
+para cualquier cambio:
+cd .. # salir del directorio mongodb_ec2
+git pull origin main
+cd mongodb_ec2 # volver a la carpeta
+npm install

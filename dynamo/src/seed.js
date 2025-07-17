@@ -144,13 +144,13 @@ async function batchWrite(table, items){
     console.log('Poblando FichaClinica...');
     await batchWrite('FichaClinica', fichas);
 
-    console.log(`✅ Seed completo:
+    console.log(`Seed completo:
       - ${tutores.length} tutores
       - ${pacientes.length} pacientes
       - ${medicos.length} médicos
       - ${fichas.length} fichas clínicas
       - Catálogos: ${procedimientos.length} proc · ${vacunas.length} vacunas · ${medicamentos.length} meds`);
   } catch (err) {
-    console.error('❌ Error durante el poblado:', err);
+    console.error('Error durante el poblado:', err);
   }
 })();
