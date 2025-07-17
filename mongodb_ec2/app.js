@@ -1,4 +1,4 @@
-// server.js
+// app.js
 require('dotenv').config();
 require('./db');            
 
@@ -15,10 +15,17 @@ const pacienteCtrl = require('./paciente');
 const tutorCtrl    = require('./tutor');
 const busqCtrl     = require('./busquedas');
 
-app.use(express.json());
-
 app.get('/', (req, res) => {
-  res.send('API de Veterinaria en MongoDB');
+  res.json({ 
+    message: 'API de Veterinaria en MongoDB',
+    version: '1.0.0',
+    endpoints: {
+      tutores: '/tutor',
+      pacientes: '/paciente', 
+      medicos: '/medico',
+      busquedas: '/paciente/:id/historial, /paciente/:id/fichaClinica, etc.'
+    }
+  });
 });
 
 // --- PACIENTES ---
@@ -47,10 +54,21 @@ app.get    ('/paciente/:id/fichaClinica',  busqCtrl.fichaClinicaPaciente);
 app.get    ('/paciente/:id/vacunas',       busqCtrl.vacunasPaciente);
 app.get    ('/procedimientos/ranking',     busqCtrl.rankingProcedimientos);
 
-// Levanta el servidor
-app.use((err, req, res, _next) => {
-  console.error(err);
-  res.status(err.status||500).json({ ok: false, error: err.message });
+// Middleware de manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({ 
+    ok: false, 
+    error: err.message || 'Error interno del servidor' 
+  });
+});
+
+// Middleware para rutas no encontradas
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    ok: false, 
+    error: 'Ruta no encontrada' 
+  });
 });
 
 const PORT = process.env.PORT || 3000;

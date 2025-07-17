@@ -3,66 +3,165 @@ require('dotenv').config();
 const { connect } = require('./db');
 const { v4: uuidv4 } = require('uuid');
 
-const MEDICOTABLE = process.env.MEDICOTABLE;
+const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
 
-exports.createMedico = async (event) => {
-  let data = {};
-  try { data = JSON.parse(event.body); } catch {}
-  if (!data.nombre) return { statusCode: 400, body: JSON.stringify({ message: 'Falta nombre del medico' }) };
-  if (!data.especialidad) return { statusCode: 400, body: JSON.stringify({ message: 'Falta especialidad del medico' }) };
-  if (!data.estado) return { statusCode: 400, body: JSON.stringify({ message: "Falta estado del medico ('ACTIVO' o 'INACTIVO')" }) };
+exports.createMedico = async (req, res) => {
+  try {
+    const { nombre, especialidad, estado = 'ACTIVO' } = req.body;
+    
+    if (!nombre) {
+      return res.status(400).json({ 
+        ok: false, 
+        error: 'Falta nombre del medico' 
+      });
+    }
+    if (!especialidad) {
+      return res.status(400).json({ 
+        ok: false, 
+        error: 'Falta especialidad del medico' 
+      });
+    }
 
-  const db = await connect();
-  const idMedico = uuidv4();
-  await db.collection(MEDICOTABLE).insertOne({ idMedico, nombre: data.nombre, especialidad: data.especialidad, estado: data.estado });
+    const db = await connect();
+    const idMedico = uuidv4();
+    
+    await db.collection(MEDICOTABLE).insertOne({ 
+      idMedico, 
+      nombre, 
+      especialidad, 
+      estado 
+    });
 
-  return { statusCode: 200, body: JSON.stringify({ message: 'Medico Creado', idMedico }) };
+    res.status(201).json({ 
+      ok: true,
+      message: 'Medico Creado', 
+      data: { idMedico, nombre, especialidad, estado }
+    });
+  } catch (error) {
+    console.error('Error creando médico:', error);
+    res.status(500).json({ 
+      ok: false, 
+      error: 'Error interno del servidor' 
+    });
+  }
 };
 
-exports.getMedicos = async () => {
-  const db = await connect();
-  const items = await db.collection(MEDICOTABLE).find().toArray();
-  return { statusCode: 200, body: JSON.stringify({ message: items }) };
+exports.getMedicos = async (req, res) => {
+  try {
+    const db = await connect();
+    const items = await db.collection(MEDICOTABLE).find().toArray();
+    
+    res.json({ 
+      ok: true,
+      data: items,
+      total: items.length
+    });
+  } catch (error) {
+    console.error('Error obteniendo médicos:', error);
+    res.status(500).json({ 
+      ok: false, 
+      error: 'Error interno del servidor' 
+    });
+  }
 };
 
-exports.getMedico = async (event) => {
-  const { id } = event.pathParameters;
-  const db = await connect();
-  const medico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
-  if (!medico) return { statusCode: 404, body: JSON.stringify({ message: 'Medico no encontrado.' }) };
-  return { statusCode: 200, body: JSON.stringify({ message: medico }) };
+exports.getMedico = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const db = await connect();
+    const item = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    
+    if (!item) {
+      return res.status(404).json({ 
+        ok: false, 
+        error: 'Médico no encontrado' 
+      });
+    }
+
+    res.json({ 
+      ok: true,
+      data: item
+    });
+  } catch (error) {
+    console.error('Error obteniendo médico:', error);
+    res.status(500).json({ 
+      ok: false, 
+      error: 'Error interno del servidor' 
+    });
+  }
 };
 
-exports.updateMedico = async (event) => {
-  const { id } = event.pathParameters;
-  let data = {};
-  try { data = JSON.parse(event.body); } catch {}
-  if (!data.attr)  return { statusCode: 400, body: JSON.stringify({ message: 'Falta el attr a modificar' }) };
-  if (data.value === undefined) return { statusCode: 400, body: JSON.stringify({ message: 'Falta value del atributo' }) };
-
-  const db = await connect();
-  const result = await db.collection(MEDICOTABLE)
-    .findOneAndUpdate(
+exports.updateMedico = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, especialidad, estado } = req.body;
+    
+    const db = await connect();
+    const result = await db.collection(MEDICOTABLE).updateOne(
       { idMedico: id },
-      { $set: { [data.attr]: data.value } },
-      { returnDocument: 'after' }
+      { $set: { nombre, especialidad, estado } }
     );
-  if (!result.value) return { statusCode: 404, body: JSON.stringify({ message: 'Medico no encontrado.' }) };
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ 
+        ok: false, 
+        error: 'Médico no encontrado' 
+      });
+    }
 
-  return { statusCode: 200, body: JSON.stringify({ message: 'Medico actualizado', medico: result.value }) };
+    const updatedMedico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    
+    res.json({ 
+      ok: true,
+      message: 'Médico actualizado exitosamente',
+      data: updatedMedico
+    });
+  } catch (error) {
+    console.error('Error actualizando médico:', error);
+    res.status(500).json({ 
+      ok: false, 
+      error: 'Error interno del servidor' 
+    });
+  }
 };
 
-exports.updateEstadoMedico = async (event) => {
-  const { id } = event.pathParameters;
-  const db = await connect();
-  const medico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
-  if (!medico) return { statusCode: 404, body: JSON.stringify({ message: 'Médico no encontrado.' }) };
+exports.updateEstadoMedico = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estado } = req.body;
+    
+    if (!['ACTIVO', 'INACTIVO'].includes(estado)) {
+      return res.status(400).json({ 
+        ok: false, 
+        error: 'Estado debe ser ACTIVO o INACTIVO' 
+      });
+    }
+    
+    const db = await connect();
+    const result = await db.collection(MEDICOTABLE).updateOne(
+      { idMedico: id },
+      { $set: { estado } }
+    );
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ 
+        ok: false, 
+        error: 'Médico no encontrado' 
+      });
+    }
 
-  const newEstado = medico.estado === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO';
-  await db.collection(MEDICOTABLE).updateOne({ idMedico: id }, { $set: { estado: newEstado } });
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: `Estado del médico ${id} actualizado a '${newEstado}'.` })
-  };
+    const updatedMedico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
+    
+    res.json({ 
+      ok: true,
+      message: `Médico ${estado.toLowerCase()} exitosamente`,
+      data: updatedMedico
+    });
+  } catch (error) {
+    console.error('Error actualizando estado del médico:', error);
+    res.status(500).json({ 
+      ok: false, 
+      error: 'Error interno del servidor' 
+    });
+  }
 };

@@ -3,73 +3,152 @@ require('dotenv').config();
 const { connect } = require('./db');
 const { v4: uuidv4 } = require('uuid');
 
-const TUTORTABLE = process.env.TUTORTABLE;
-const PACIENTETABLE = process.env.PACIENTETABLE;
+const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
+const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
 
-exports.createTutor = async (event) => {
-  let data = {};
-  try { data = JSON.parse(event.body); } catch {}
-  if (!data.nombre)    return { statusCode: 400, body: JSON.stringify({ message: 'Falta nombre del tutor' }) };
-  if (!data.direccion) return { statusCode: 400, body: JSON.stringify({ message: 'Falta direccion del tutor' }) };
-  if (!data.telefono)  return { statusCode: 400, body: JSON.stringify({ message: 'Falta telefono del tutor' }) };
-  if (!data.email)     return { statusCode: 400, body: JSON.stringify({ message: 'Falta email del tutor' }) };
+exports.createTutor = async (req, res) => {
+  try {
+    const { nombre, email, telefono } = req.body;
+    
+    if (!nombre || !email || !telefono) {
+      return res.status(400).json({
+        ok: false,
+        error: 'Faltan campos requeridos: nombre, email, telefono'
+      });
+    }
 
-  const db = await connect();
-  const idTutor = uuidv4();
-  await db.collection(TUTORTABLE).insertOne({
-    idTutor, nombre: data.nombre,
-    direccion: data.direccion,
-    telefono: data.telefono,
-    email: data.email
-  });
+    const db = await connect();
+    const idTutor = uuidv4();
+    
+    await db.collection(TUTORTABLE).insertOne({
+      idTutor,
+      nombre,
+      email,
+      telefono
+    });
 
-  return { statusCode: 200, body: JSON.stringify({ message: 'Tutor Creado', idTutor }) };
+    res.status(201).json({
+      ok: true,
+      message: 'Tutor creado exitosamente',
+      data: { idTutor, nombre, email, telefono }
+    });
+  } catch (error) {
+    console.error('Error creando tutor:', error);
+    res.status(500).json({
+      ok: false,
+      error: 'Error interno del servidor'
+    });
+  }
 };
 
-exports.getTutores = async () => {
-  const db = await connect();
-  const items = await db.collection(TUTORTABLE).find().toArray();
-  return { statusCode: 200, body: JSON.stringify({ message: items }) };
+exports.getTutores = async (req, res) => {
+  try {
+    const db = await connect();
+    const tutores = await db.collection(TUTORTABLE).find().sort({ nombre: 1 }).toArray();
+    
+    res.json({
+      ok: true,
+      data: tutores,
+      total: tutores.length
+    });
+  } catch (error) {
+    console.error('Error obteniendo tutores:', error);
+    res.status(500).json({
+      ok: false,
+      error: 'Error interno del servidor'
+    });
+  }
 };
 
-exports.getTutor = async (event) => {
-  const { id } = event.pathParameters;
-  const db = await connect();
-  const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });
-  if (!tutor) return { statusCode: 404, body: JSON.stringify({ message: 'Tutor no encontrado.' }) };
-  return { statusCode: 200, body: JSON.stringify({ message: tutor }) };
+exports.getTutor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const db = await connect();
+    const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });
+    
+    if (!tutor) {
+      return res.status(404).json({
+        ok: false,
+        error: 'Tutor no encontrado'
+      });
+    }
+
+    res.json({
+      ok: true,
+      data: tutor
+    });
+  } catch (error) {
+    console.error('Error obteniendo tutor:', error);
+    res.status(500).json({
+      ok: false,
+      error: 'Error interno del servidor'
+    });
+  }
 };
 
-exports.updateTutor = async (event) => {
-  const { id } = event.pathParameters;
-  let data = {};
-  try { data = JSON.parse(event.body); } catch {}
-  if (!data.attr)  return { statusCode: 400, body: JSON.stringify({ message: 'Falta el attr a modificar' }) };
-  if (data.value === undefined) return { statusCode: 400, body: JSON.stringify({ message: 'Falta value del atributo' }) };
-
-  const db = await connect();
-  const result = await db.collection(TUTORTABLE)
-    .findOneAndUpdate(
+exports.updateTutor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, email, telefono } = req.body;
+    
+    const db = await connect();
+    const result = await db.collection(TUTORTABLE).updateOne(
       { idTutor: id },
-      { $set: { [data.attr]: data.value } },
-      { returnDocument: 'after' }
+      { $set: { nombre, email, telefono } }
     );
-  if (!result.value) return { statusCode: 404, body: JSON.stringify({ message: 'Tutor no encontrado.' }) };
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).json({
+        ok: false,
+        error: 'Tutor no encontrado'
+      });
+    }
 
-  return { statusCode: 200, body: JSON.stringify({ message: 'Tutor actualizado', tutor: result.value }) };
+    const updatedTutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });
+
+    res.json({
+      ok: true,
+      message: 'Tutor actualizado exitosamente',
+      data: updatedTutor
+    });
+  } catch (error) {
+    console.error('Error actualizando tutor:', error);
+    res.status(500).json({
+      ok: false,
+      error: 'Error interno del servidor'
+    });
+  }
 };
 
-exports.getPacientesByTutor = async (event) => {
-  const { id } = event.pathParameters;
-  if (!id) return { statusCode: 400, body: JSON.stringify({ message: 'Debe proporcionar el ID del tutor.' }) };
+exports.getPacientesByTutor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const db = await connect();
+    
+    // Verificar que el tutor existe
+    const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });
+    if (!tutor) {
+      return res.status(404).json({
+        ok: false,
+        error: 'Tutor no encontrado'
+      });
+    }
 
-  const db = await connect();
-  const pacientes = await db.collection(PACIENTETABLE)
-    .find(
-      { idTutor: id },
-      { projection: { idPaciente: 1, nombre: 1, sexo: 1, raza: 1 } }
-    )
-    .toArray();
-
-  return { statusCode: 200, body: JSON.stringify({ message: pacientes }) };
+    const pacientes = await db.collection(PACIENTETABLE).find({ idTutor: id }).toArray();
+    
+    res.json({
+      ok: true,
+      data: {
+        tutor: tutor.nombre,
+        pacientes,
+        total: pacientes.length
+      }
+    });
+  } catch (error) {
+    console.error('Error obteniendo pacientes del tutor:', error);
+    res.status(500).json({
+      ok: false,
+      error: 'Error interno del servidor'
+    });
+  }
 };
