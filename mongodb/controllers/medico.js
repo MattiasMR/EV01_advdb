@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { getDB } = require('../app');
 const { v4: uuidv4 } = require('uuid');
 
 const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
@@ -21,7 +21,7 @@ exports.createMedico = async (req, res) => {
       });
     }
 
-    const db = await connect();
+    const db = await getDB();
     const idMedico = uuidv4();
     
     await db.collection(MEDICOTABLE).insertOne({ 
@@ -47,7 +47,7 @@ exports.createMedico = async (req, res) => {
 
 exports.getMedicos = async (req, res) => {
   try {
-    const db = await connect();
+    const db = await getDB();
     const items = await db.collection(MEDICOTABLE).find().toArray();
     
     res.json({ 
@@ -67,7 +67,7 @@ exports.getMedicos = async (req, res) => {
 exports.getMedico = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     const item = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
     
     if (!item) {
@@ -95,7 +95,7 @@ exports.updateMedico = async (req, res) => {
     const { id } = req.params;
     const { nombre, especialidad, estado } = req.body;
     
-    const db = await connect();
+    const db = await getDB();
     const result = await db.collection(MEDICOTABLE).updateOne(
       { idMedico: id },
       { $set: { nombre, especialidad, estado } }
@@ -128,7 +128,7 @@ exports.updateEstadoMedico = async (req, res) => {
   try {
     const { id } = req.params;
     
-    const db = await connect();
+    const db = await getDB();
     
     const medico = await db.collection(MEDICOTABLE).findOne({ idMedico: id });
     

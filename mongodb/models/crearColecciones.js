@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { connect } = require('../app');
 
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';

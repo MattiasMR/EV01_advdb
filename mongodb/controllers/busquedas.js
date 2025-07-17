@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { getDB } = require('../app');
 
 const FICHACLINICATABLE = process.env.FICHACLINICATABLE || 'FichaClinica';
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
@@ -8,7 +8,7 @@ const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
 exports.fichaClinicaPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     
     const fichas = await db.collection(FICHACLINICATABLE)
       .find({ idPaciente: id })
@@ -63,7 +63,7 @@ exports.rankingProcedimientos = async (req, res) => {
   try {
     const limit = Number(req.query.top) || 5;
     const stats = {};
-    const db = await connect();
+    const db = await getDB();
 
     const fichas = await db.collection(FICHACLINICATABLE)
       .find({}, { projection: { procedimientos: 1 } })
@@ -96,7 +96,7 @@ exports.rankingProcedimientos = async (req, res) => {
 exports.vacunasPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     
     const fichas = await db.collection(FICHACLINICATABLE)
       .find({ idPaciente: id }, { projection: { vacunas: 1 } })
@@ -118,7 +118,7 @@ exports.vacunasPaciente = async (req, res) => {
 exports.historialPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
 
     const fichas = await db.collection(FICHACLINICATABLE)
       .find(

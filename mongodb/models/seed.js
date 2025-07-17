@@ -1,14 +1,36 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { MongoClient } = require('mongodb');
 const { faker } = require('@faker-js/faker');
 const { v4: uuidv4 } = require('uuid');
+
+// Configuración de la base de datos
+const url = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017';
+const dbName = process.env.DB_NAME || 'veterinaria';
+let client, db;
+
+async function connectDB() {
+  if (db) return db;
+  client = new MongoClient(url);
+  await client.connect();
+  db = client.db(dbName);
+  console.log(`MongoDB conectado a ${dbName}`);
+  return db;
+}
+
+function getDB() {
+  if (!db) {
+    throw new Error('Base de datos no conectada. Llama a connectDB() primero.');
+  }
+  return db;
+}
 
 const nRegistros = 600; // Número de registros a generar
 
 const medicamentos = Array.from({ length: 30 }).map(() => ({
   idMedicamento: uuidv4(),
   nombre: faker.science.chemicalElement().name + ' ' +
-          faker.number.int({ min: 10, max: 250 }) + ' mg'
+          faker.number.int({ min: 10, max: 250 }) + ' mg',
+  costo: faker.number.int({ min: 2000, max: 60000 })
 }));
 
 const procedimientos = [
@@ -26,6 +48,9 @@ const vacunas = [
   'Bordetella', 'Coronavirus felino'
 ].map(nombre => ({ idVacuna: uuidv4(), nombre }));
 
+const PROCEDIMIENTOSTABLE = 'Procedimientos';
+const VACUNASTABLE = 'Vacunas';
+const MEDICAMENTOSTABLE = 'Medicamentos';
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
 const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
@@ -33,9 +58,14 @@ const FICHACLINICATABLE = process.env.FICHACLINICATABLE || 'FichaClinica';
 
 async function limpiarColecciones() {
   console.log('Limpiando colecciones...');
-  const db = await connect();
+  await connectDB(); // Asegurarse de que la conexión esté abierta
+  const db = await getDB();
   
   await Promise.all([
+    db.collection(PROCEDIMIENTOSTABLE).deleteMany({}),
+    db.collection(VACUNASTABLE).deleteMany({}),
+    db.collection(MEDICAMENTOSTABLE).deleteMany({}),
+
     db.collection(TUTORTABLE).deleteMany({}),
     db.collection(PACIENTETABLE).deleteMany({}),
     db.collection(MEDICOTABLE).deleteMany({}),
@@ -44,8 +74,8 @@ async function limpiarColecciones() {
 }
 
 async function generarDatos() {
-  console.log('📊 Generando datos con estructura DynamoDB...');
-  const db = await connect();
+  console.log('Generando datos...');
+  const db = await getDB();
 
   const tutores = Array.from({ length: nRegistros }).map(() => ({
     idTutor: uuidv4(),
@@ -123,6 +153,11 @@ async function generarDatos() {
     }
   });
 
+
+  await db.collection(PROCEDIMIENTOSTABLE).insertMany(procedimientos);
+  await db.collection(MEDICAMENTOSTABLE).insertMany(medicamentos);
+  await db.collection(VACUNASTABLE).insertMany(vacunas);
+
   console.log('Insertando tutores...');
   await db.collection(TUTORTABLE).insertMany(tutores);
   
@@ -148,9 +183,18 @@ async function generarDatos() {
     await limpiarColecciones();
     await generarDatos();
     console.log('Proceso completado exitosamente');
+    
+    // Cerrar conexión
+    if (client) {
+      await client.close();
+      console.log('Conexión cerrada');
+    }
     process.exit(0);
   } catch (error) {
     console.error('Error durante el poblado:', error);
+    if (client) {
+      await client.close();
+    }
     process.exit(1);
   }
 })();

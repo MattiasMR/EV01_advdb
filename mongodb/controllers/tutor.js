@@ -1,6 +1,5 @@
-// tutor.js
 require('dotenv').config();
-const { connect } = require('./db');
+const { getDB } = require('../app');
 const { v4: uuidv4 } = require('uuid');
 
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
@@ -17,7 +16,7 @@ exports.createTutor = async (req, res) => {
       });
     }
 
-    const db = await connect();
+    const db = await getDB();
     const idTutor = uuidv4();
     
     await db.collection(TUTORTABLE).insertOne({
@@ -43,7 +42,7 @@ exports.createTutor = async (req, res) => {
 
 exports.getTutores = async (req, res) => {
   try {
-    const db = await connect();
+    const db = await getDB();
     const tutores = await db.collection(TUTORTABLE).find().sort({ nombre: 1 }).toArray();
     
     res.json({
@@ -63,7 +62,7 @@ exports.getTutores = async (req, res) => {
 exports.getTutor = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });
     
     if (!tutor) {
@@ -91,7 +90,7 @@ exports.updateTutor = async (req, res) => {
     const { id } = req.params;
     const { nombre, email, telefono } = req.body;
     
-    const db = await connect();
+    const db = await getDB();
     const result = await db.collection(TUTORTABLE).updateOne(
       { idTutor: id },
       { $set: { nombre, email, telefono } }
@@ -123,7 +122,7 @@ exports.updateTutor = async (req, res) => {
 exports.getPacientesByTutor = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     
     // Verificar que el tutor existe
     const tutor = await db.collection(TUTORTABLE).findOne({ idTutor: id });

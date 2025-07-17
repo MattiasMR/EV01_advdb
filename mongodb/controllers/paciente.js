@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('./db');
+const { getDB } = require('../app');
 const { v4: uuidv4 } = require('uuid');
 
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
@@ -40,7 +40,7 @@ exports.createPaciente = async (req, res) => {
       });
     }
 
-    const db = await connect();
+    const db = await getDB();
     
     const tutor = await db.collection(TUTORTABLE).findOne({ idTutor });
     if (!tutor) {
@@ -76,7 +76,7 @@ exports.createPaciente = async (req, res) => {
 
 exports.getPacientes = async (req, res) => {
   try {
-    const db = await connect();
+    const db = await getDB();
     const items = await db.collection(PACIENTETABLE).find().toArray();
     
     res.json({ 
@@ -96,7 +96,7 @@ exports.getPacientes = async (req, res) => {
 exports.getPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = await getDB();
     const paciente = await db.collection(PACIENTETABLE).findOne({ idPaciente: id });
     
     if (!paciente) {
@@ -129,7 +129,7 @@ exports.updatePaciente = async (req, res) => {
     const { id } = req.params;
     const { nombre, especie, raza, sexo } = req.body;
     
-    const db = await connect();
+    const db = await getDB();
     const result = await db.collection(PACIENTETABLE).updateOne(
       { idPaciente: id },
       { $set: { nombre, especie, raza, sexo } }

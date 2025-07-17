@@ -32,28 +32,28 @@ provider:
 functions:
     # Crear, obtener, actualizar y eliminar pacientes 
     createPaciente:
-      handler: src/paciente.createPaciente
+      handler: controllers/paciente.createPaciente
       events:
         - httpApi:
             path: /paciente
             method: post
 
     getPacientes:
-      handler: src/paciente.getPacientes
+      handler: controllers/paciente.getPacientes
       events:
         - httpApi:
             path: /paciente
             method: get
 
     getPaciente:
-      handler: src/paciente.getPaciente
+      handler: controllers/paciente.getPaciente
       events:
         - httpApi:
             path: /paciente/{id}
             method: get
     
     updatePaciente:
-      handler: src/paciente.updatePaciente
+      handler: controllers/paciente.updatePaciente
       events:
         - httpApi:
             path: /paciente/{id}
@@ -61,35 +61,35 @@ functions:
       
     # Crear, obtener, actualizar y activar/desactivar médicos
     createMedico:
-      handler: src/medico.createMedico
+      handler: controllers/medico.createMedico
       events:
         - httpApi:
             path: /medico
             method: post
 
     getMedicos:
-      handler: src/medico.getMedicos
+      handler: controllers/medico.getMedicos
       events:
         - httpApi:
             path: /medico
             method: get
 
     getMedico:
-      handler: src/medico.getMedico
+      handler: controllers/medico.getMedico
       events:
         - httpApi:
             path: /medico/{id}
             method: get
     
     updateMedico:
-      handler: src/medico.updateMedico
+      handler: controllers/medico.updateMedico
       events:
         - httpApi:
             path: /medico/{id}
             method: put
 
     updateEstadoMedico:
-      handler: src/medico.updateEstadoMedico
+      handler: controllers/medico.updateEstadoMedico
       events:
         - httpApi:
             path: /medico/{id}/cambiarEstado
@@ -97,35 +97,35 @@ functions:
 
     # Crear, obtener, actualizar y eliminar tutores
     createTutor:
-      handler: src/tutor.createTutor
+      handler: controllers/tutor.createTutor
       events:
         - httpApi:
             path: /tutor
             method: post
 
     getTutores:
-      handler: src/tutor.getTutores
+      handler: controllers/tutor.getTutores
       events:
         - httpApi:
             path: /tutor
             method: get
 
     getTutor:
-      handler: src/tutor.getTutor
+      handler: controllers/tutor.getTutor
       events:
         - httpApi:
             path: /tutor/{id}
             method: get
     
     updateTutor:
-      handler: src/tutor.updateTutor
+      handler: controllers/tutor.updateTutor
       events:
         - httpApi:
             path: /tutor/{id}
             method: put
 
     getPacientesByTutor:
-      handler: src/tutor.getPacientesByTutor 
+      handler: controllers/tutor.getPacientesByTutor 
       events:
         - httpApi:
             path: /tutor/{id}/pacientes
@@ -133,63 +133,63 @@ functions:
     
 
     getHistorialPaciente:
-      handler: src/busquedas.historialPaciente
+      handler: controllers/busquedas.historialPaciente
       events:
         - httpApi:
             path: /paciente/{id}/historial
             method: get
 
     getFichaClinica:
-      handler: src/busquedas.fichaClinicaPaciente
+      handler: controllers/busquedas.fichaClinicaPaciente
       events:
         - httpApi:
             path: /paciente/{id}/fichaClinica
             method: get
 
     rankingProcedimientos:
-      handler: src/busquedas.rankingProcedimientos
+      handler: controllers/busquedas.rankingProcedimientos
       events:
         - httpApi:
             path: /procedimientos/ranking
             method: get
 
     getVacunasPaciente:
-      handler: src/busquedas.vacunasPaciente
+      handler: controllers/busquedas.vacunasPaciente
       events:
         - httpApi:
             path: /paciente/{id}/vacunas
             method: get
 
     volumenYGastoPromedioPorMes:
-      handler: src/queriesdashboard.volumenYGastoPromedioPorMes
+      handler: controllers/dashboardqueries.volumenYGastoPromedioPorMes
       events:
         - httpApi:
             path: /dashboard/volumenGastoMensual
             method: get
 
     distribucionPorEspecialidad:
-      handler: src/queriesdashboard.distribucionPorEspecialidad
+      handler: controllers/dashboardqueries.distribucionPorEspecialidad
       events:
         - httpApi:
             path: /dashboard/distribucionEspecialidades
             method: get
 
     topMedicamentos:
-      handler: src/queriesdashboard.topMedicamentos
+      handler: controllers/dashboardqueries.topMedicamentos
       events:
         - httpApi:
             path: /dashboard/topMedicamentos
             method: get
 
     evolucionIngresosVsCostes:
-      handler: src/queriesdashboard.evolucionIngresosVsCostes
+      handler: controllers/dashboardqueries.evolucionIngresosVsCostes
       events:
         - httpApi:
             path: /dashboard/evolucionIngresoVsCostes
             method: get
 
     demandaVacunasPorMes:
-      handler: src/queriesdashboard.demandaVacunasPorMes
+      handler: controllers/dashboardqueries.demandaVacunasPorMes
       events:
         - httpApi:
             path: /dashboard/demandaVacunasMensual
