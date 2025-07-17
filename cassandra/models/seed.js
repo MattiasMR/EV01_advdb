@@ -228,7 +228,7 @@ async function poblarDatos() {
       totalFichas++;
       
       if (totalFichas % 100 === 0) {
-        console.log(`📊 Fichas clínicas insertadas: ${totalFichas}`);
+        console.log(`Fichas clínicas insertadas: ${totalFichas}`);
       }
     }
   }

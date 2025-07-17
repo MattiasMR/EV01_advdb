@@ -145,10 +145,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/paciente.createPaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-createPaciente",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -160,11 +160,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "createPaciente"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -178,10 +174,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/paciente.getPacientes",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getPacientes",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -193,11 +189,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getPacientes"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -211,10 +203,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/paciente.getPaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getPaciente",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -226,11 +218,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getPaciente"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -244,10 +232,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/paciente.updatePaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-updatePaciente",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -259,11 +247,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "updatePaciente"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -277,10 +261,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/medico.createMedico",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-createMedico",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -292,11 +276,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "createMedico"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -310,10 +290,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/medico.getMedicos",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getMedicos",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -325,11 +305,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getMedicos"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -343,10 +319,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/medico.getMedico",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getMedico",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -358,11 +334,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getMedico"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -376,10 +348,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/medico.updateMedico",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-updateMedico",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -391,11 +363,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "updateMedico"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -409,10 +377,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/medico.updateEstadoMedico",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-updateEstadoMedico",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -424,11 +392,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "updateEstadoMedico"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -442,10 +406,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/tutor.createTutor",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-createTutor",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -457,11 +421,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "createTutor"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -475,10 +435,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/tutor.getTutores",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getTutores",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -490,11 +450,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getTutores"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -508,10 +464,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/tutor.getTutor",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getTutor",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -523,11 +479,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getTutor"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -541,10 +493,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/tutor.updateTutor",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-updateTutor",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -556,11 +508,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "updateTutor"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -574,10 +522,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/tutor.getPacientesByTutor",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getPacientesByTutor",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -589,11 +537,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getPacientesByTutor"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -607,10 +551,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/busquedas.historialPaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getHistorialPaciente",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -622,11 +566,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getHistorialPaciente"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -640,10 +580,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/busquedas.fichaClinicaPaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getFichaClinica",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -655,11 +595,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getFichaClinica"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -673,10 +609,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/busquedas.rankingProcedimientos",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-rankingProcedimientos",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -688,11 +624,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "rankingProcedimientos"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -706,10 +638,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/busquedas.vacunasPaciente",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-getVacunasPaciente",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -721,11 +653,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "getVacunasPaciente"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -739,10 +667,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/dashboardqueries.volumenYGastoPromedioPorMes",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-volumenYGastoPromedioPorMes",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -754,11 +682,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "volumenYGastoPromedioPorMes"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -772,10 +696,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/dashboardqueries.distribucionPorEspecialidad",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-distribucionPorEspecialidad",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -787,11 +711,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "distribucionPorEspecialidad"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -805,10 +725,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/dashboardqueries.topMedicamentos",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-topMedicamentos",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -820,11 +740,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "topMedicamentos"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -838,10 +754,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/dashboardqueries.evolucionIngresosVsCostes",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-evolucionIngresosVsCostes",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -853,11 +769,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "evolucionIngresosVsCostes"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -871,10 +783,10 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d106c65f-3024",
-          "S3Key": "serverless/DynamoTest/dev/1752726817755-2025-07-17T04:33:37.755Z/DynamoTest.zip"
+          "S3Key": "serverless/DynamoTest/dev/1752744806507-2025-07-17T09:33:26.507Z/DynamoTest.zip"
         },
-        "Handler": "index.handler",
-        "Runtime": "nodejs20.x",
+        "Handler": "controllers/dashboardqueries.demandaVacunasPorMes",
+        "Runtime": "nodejs18.x",
         "FunctionName": "DynamoTest-dev-demandaVacunasPorMes",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -886,11 +798,7 @@
             "FICHACLINICATABLE": "FichaClinica",
             "PROCEDIMIENTOTABLE": "Procedimientos",
             "VACUNATABLE": "Vacunas",
-            "MEDICAMENTOTABLE": "Medicamentos",
-            "SLS_IOT_ENDPOINT": "a286xeda0u113j-ats.iot.us-east-1.amazonaws.com",
-            "SLS_SERVICE": "DynamoTest",
-            "SLS_STAGE": "dev",
-            "SLS_FUNCTION": "demandaVacunasPorMes"
+            "MEDICAMENTOTABLE": "Medicamentos"
           }
         },
         "Role": "arn:aws:iam::280053524810:role/LabRole"
@@ -899,234 +807,234 @@
         "DemandaVacunasPorMesLogGroup"
       ]
     },
-    "CreatePacienteLambdaVersionaoHYpKpjamkjWFObBXJqp0khvuyrmPrl13qzlIgxLw": {
+    "CreatePacienteLambdaVersionzmZBPVru94v0bjObbpzdtm5KuEbd2SkHSxaN9UZTQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreatePacienteLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetPacientesLambdaVersionbYbzgpEKJZmtgQZlGupYMPyeWgPdgtBsIEJQTERLO4s": {
+    "GetPacientesLambdaVersionAcFInhlKyb5aSyxzVydi6Ods9neGUOEjhSKqaYAHo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetPacientesLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetPacienteLambdaVersionKeJK9cNF6fXleZAKO182V1fHtq38TlXkQArlxdjo8nc": {
+    "GetPacienteLambdaVersionF6OVEK8ZaQlmbdmrUV7TsM7qy9CwYRfTNobWnO9c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetPacienteLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "UpdatePacienteLambdaVersionshyP809TF35FxHHmde73WZ7RbTAHcqNZWwon0SYCIfA": {
+    "UpdatePacienteLambdaVersionUXwgNHg07vEcNYf7Yu7uI1Xxoyw659k1uRi0ZHO6aI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdatePacienteLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "CreateMedicoLambdaVersionGoT1iSXr3fK0Ula8W958qkAUQGzjeAVBSKDZ6DFxZE": {
+    "CreateMedicoLambdaVersion9N2Lbxq03HxMVPcfczkR1EIRHTFfOLr6HU19FSaUU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMedicoLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetMedicosLambdaVersionYG8AHCEfoVC3F5OHVpu5AOTvXtPmALcWqcxywkJGk": {
+    "GetMedicosLambdaVersionNPDjmxiVVCu2zwEdbhUXYLnLlAafJOsaIj4JPtoLMs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMedicosLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetMedicoLambdaVersiong5umKU1WfmDmfJBXgDWxl4Dne7U6BPvv9IuTp6qhPA": {
+    "GetMedicoLambdaVersion0LHhtz701t27xIF6eqGsGXM6xPJEa3wIOXzqMilo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMedicoLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "UpdateMedicoLambdaVersionVDJdwnrJcjlcK9lEaL5grcHdWbVXBnjK2022aXeKTsw": {
+    "UpdateMedicoLambdaVersion2maUBfFCqnZ75tEe9JTiBrIYMsUs3mSQ3rRpFLIbk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMedicoLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "UpdateEstadoMedicoLambdaVersionIyJVqiNt7SohM4xKdHVlv3GqAPczGnwcQZkfsfnE": {
+    "UpdateEstadoMedicoLambdaVersionwPM3NR4MesFVXbbGeZxabPSvP29BJQgKyJsLbxXXlI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateEstadoMedicoLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "CreateTutorLambdaVersion9DsjvxFyYqNnpTq5pRGP75HVArlT5OKYlul8p70o": {
+    "CreateTutorLambdaVersionSoI8BiztrmeM18HOmltUEiiD0vT6dzjQorJzs9tS2zg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateTutorLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetTutoresLambdaVersionDUD0KiIdnIcEKp9L7k8usmdb6qaILjBmPctXzKZ2hf0": {
+    "GetTutoresLambdaVersiondvrQttDkHUqJBfY7XAlxQZoF572wNCeBXGTj84OtRQk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetTutoresLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetTutorLambdaVersionG6Z2KASECZPpY5ABBNDGlg4aTZhKNmk2ohwxmscY5GY": {
+    "GetTutorLambdaVersionFt7Fup2nky2fyOSBDxywqXp6JL6BTRDlOEgLgQyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetTutorLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "UpdateTutorLambdaVersionnkJjoHbTEotZmjTjFysVAOScbbdvKiVi2JJ0LOF0NE": {
+    "UpdateTutorLambdaVersionTXFazGzBLKPcEbmIwbPTnGy5GuKShRKObq354UdLb0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateTutorLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetPacientesByTutorLambdaVersionCkHllFVwUZ4aPX0GtkIxyYVHlhmAhjtYYJIBWYyqlTU": {
+    "GetPacientesByTutorLambdaVersionxCKKHUueCkZ0My7EJ16PLkhr484E7YvzEaEd9a0w": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetPacientesByTutorLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetHistorialPacienteLambdaVersionUs9LKt8bh7SytCbqNlACspdyx4kHHQlJgXsy1j0LuaI": {
+    "GetHistorialPacienteLambdaVersionhXp3cOjyP9AO5fMGElcumfQ57EVUwGQCLva8eIaGPk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetHistorialPacienteLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetFichaClinicaLambdaVersionpHxkUPNiCyUz4NSsU3DkE9nXNjQSqyrmVsfrLmsiY": {
+    "GetFichaClinicaLambdaVersionIw2tlBGgcbW0W1a5vTuOPJ4NMYowLVhY1sjc0h21QlM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetFichaClinicaLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "RankingProcedimientosLambdaVersionHG8RGi7uQjg6ohS7ev0QX6eZ7aTUIBJp4dvbMoXEEU8": {
+    "RankingProcedimientosLambdaVersionuRH6c6CxKDr8wK2F9jEYgI0GfGJzf8cOYWbLRMarp0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "RankingProcedimientosLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "GetVacunasPacienteLambdaVersionrPuQVTVv7JToPSj4Ggt8dXPCYbVI8L6mDtSRR3ts": {
+    "GetVacunasPacienteLambdaVersion020Y18AVMukmKJ0TfwiuHuYr6Ts5jMw4TvVbwRTEPU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetVacunasPacienteLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "VolumenYGastoPromedioPorMesLambdaVersion7aSubzp39iqt3bg55RP587HIlDXeP3U5MG3Y9drFLI": {
+    "VolumenYGastoPromedioPorMesLambdaVersionP0FLxzyPSXluMqMmA8GRY2uG2JOgFx4MdPdLL5NaFe8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "VolumenYGastoPromedioPorMesLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "DistribucionPorEspecialidadLambdaVersionHvigvR9BOWkyCEhh277eiCKdlnCvacxRCMy0GwqfHY": {
+    "DistribucionPorEspecialidadLambdaVersionweBMy3zOZT1qWEfmyZCRWxf9HTGOX2EzovaxivffeU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DistribucionPorEspecialidadLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "TopMedicamentosLambdaVersion6sqG2Af83lpjsSnNTNwAvURWtXDkN2G5wxf7htpvAk": {
+    "TopMedicamentosLambdaVersionaiD8sT9GfvGhG8vvad2V32jU0TyBRFIqEeaPQn2ug": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "TopMedicamentosLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "EvolucionIngresosVsCostesLambdaVersion7a2StvSVX7BNhvm61oePtRB0BN25Euxz3NeeP2gGnc": {
+    "EvolucionIngresosVsCostesLambdaVersionffbdXBApKYYMO0D5qlmwGUGhssqO55ag0UNvT2jbM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "EvolucionIngresosVsCostesLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
-    "DemandaVacunasPorMesLambdaVersionmFDITTjppB1fwl3EKt8vjmheniemocu32HyQIWhlzo": {
+    "DemandaVacunasPorMesLambdaVersiongseAHdDNt86xZjSuGgG0bHiOY5yU5VCkmsexKlkwb0c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DemandaVacunasPorMesLambdaFunction"
         },
-        "CodeSha256": "nOD2sEPVuLR9uUXdd91lwKwy95wO30vahHXDq9ELghA="
+        "CodeSha256": "jcHsBTNX32pbj+xz+YEmHU/osnQijHMrKj9lu07Xy98="
       }
     },
     "HttpApi": {
@@ -3090,7 +2998,7 @@
     "CreatePacienteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreatePacienteLambdaVersionaoHYpKpjamkjWFObBXJqp0khvuyrmPrl13qzlIgxLw"
+        "Ref": "CreatePacienteLambdaVersionzmZBPVru94v0bjObbpzdtm5KuEbd2SkHSxaN9UZTQ"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-CreatePacienteLambdaFunctionQualifiedArn"
@@ -3099,7 +3007,7 @@
     "GetPacientesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetPacientesLambdaVersionbYbzgpEKJZmtgQZlGupYMPyeWgPdgtBsIEJQTERLO4s"
+        "Ref": "GetPacientesLambdaVersionAcFInhlKyb5aSyxzVydi6Ods9neGUOEjhSKqaYAHo"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetPacientesLambdaFunctionQualifiedArn"
@@ -3108,7 +3016,7 @@
     "GetPacienteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetPacienteLambdaVersionKeJK9cNF6fXleZAKO182V1fHtq38TlXkQArlxdjo8nc"
+        "Ref": "GetPacienteLambdaVersionF6OVEK8ZaQlmbdmrUV7TsM7qy9CwYRfTNobWnO9c"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetPacienteLambdaFunctionQualifiedArn"
@@ -3117,7 +3025,7 @@
     "UpdatePacienteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdatePacienteLambdaVersionshyP809TF35FxHHmde73WZ7RbTAHcqNZWwon0SYCIfA"
+        "Ref": "UpdatePacienteLambdaVersionUXwgNHg07vEcNYf7Yu7uI1Xxoyw659k1uRi0ZHO6aI"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-UpdatePacienteLambdaFunctionQualifiedArn"
@@ -3126,7 +3034,7 @@
     "CreateMedicoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMedicoLambdaVersionGoT1iSXr3fK0Ula8W958qkAUQGzjeAVBSKDZ6DFxZE"
+        "Ref": "CreateMedicoLambdaVersion9N2Lbxq03HxMVPcfczkR1EIRHTFfOLr6HU19FSaUU"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-CreateMedicoLambdaFunctionQualifiedArn"
@@ -3135,7 +3043,7 @@
     "GetMedicosLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMedicosLambdaVersionYG8AHCEfoVC3F5OHVpu5AOTvXtPmALcWqcxywkJGk"
+        "Ref": "GetMedicosLambdaVersionNPDjmxiVVCu2zwEdbhUXYLnLlAafJOsaIj4JPtoLMs"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetMedicosLambdaFunctionQualifiedArn"
@@ -3144,7 +3052,7 @@
     "GetMedicoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMedicoLambdaVersiong5umKU1WfmDmfJBXgDWxl4Dne7U6BPvv9IuTp6qhPA"
+        "Ref": "GetMedicoLambdaVersion0LHhtz701t27xIF6eqGsGXM6xPJEa3wIOXzqMilo"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetMedicoLambdaFunctionQualifiedArn"
@@ -3153,7 +3061,7 @@
     "UpdateMedicoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMedicoLambdaVersionVDJdwnrJcjlcK9lEaL5grcHdWbVXBnjK2022aXeKTsw"
+        "Ref": "UpdateMedicoLambdaVersion2maUBfFCqnZ75tEe9JTiBrIYMsUs3mSQ3rRpFLIbk"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-UpdateMedicoLambdaFunctionQualifiedArn"
@@ -3162,7 +3070,7 @@
     "UpdateEstadoMedicoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateEstadoMedicoLambdaVersionIyJVqiNt7SohM4xKdHVlv3GqAPczGnwcQZkfsfnE"
+        "Ref": "UpdateEstadoMedicoLambdaVersionwPM3NR4MesFVXbbGeZxabPSvP29BJQgKyJsLbxXXlI"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-UpdateEstadoMedicoLambdaFunctionQualifiedArn"
@@ -3171,7 +3079,7 @@
     "CreateTutorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateTutorLambdaVersion9DsjvxFyYqNnpTq5pRGP75HVArlT5OKYlul8p70o"
+        "Ref": "CreateTutorLambdaVersionSoI8BiztrmeM18HOmltUEiiD0vT6dzjQorJzs9tS2zg"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-CreateTutorLambdaFunctionQualifiedArn"
@@ -3180,7 +3088,7 @@
     "GetTutoresLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetTutoresLambdaVersionDUD0KiIdnIcEKp9L7k8usmdb6qaILjBmPctXzKZ2hf0"
+        "Ref": "GetTutoresLambdaVersiondvrQttDkHUqJBfY7XAlxQZoF572wNCeBXGTj84OtRQk"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetTutoresLambdaFunctionQualifiedArn"
@@ -3189,7 +3097,7 @@
     "GetTutorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetTutorLambdaVersionG6Z2KASECZPpY5ABBNDGlg4aTZhKNmk2ohwxmscY5GY"
+        "Ref": "GetTutorLambdaVersionFt7Fup2nky2fyOSBDxywqXp6JL6BTRDlOEgLgQyc"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetTutorLambdaFunctionQualifiedArn"
@@ -3198,7 +3106,7 @@
     "UpdateTutorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateTutorLambdaVersionnkJjoHbTEotZmjTjFysVAOScbbdvKiVi2JJ0LOF0NE"
+        "Ref": "UpdateTutorLambdaVersionTXFazGzBLKPcEbmIwbPTnGy5GuKShRKObq354UdLb0"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-UpdateTutorLambdaFunctionQualifiedArn"
@@ -3207,7 +3115,7 @@
     "GetPacientesByTutorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetPacientesByTutorLambdaVersionCkHllFVwUZ4aPX0GtkIxyYVHlhmAhjtYYJIBWYyqlTU"
+        "Ref": "GetPacientesByTutorLambdaVersionxCKKHUueCkZ0My7EJ16PLkhr484E7YvzEaEd9a0w"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetPacientesByTutorLambdaFunctionQualifiedArn"
@@ -3216,7 +3124,7 @@
     "GetHistorialPacienteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetHistorialPacienteLambdaVersionUs9LKt8bh7SytCbqNlACspdyx4kHHQlJgXsy1j0LuaI"
+        "Ref": "GetHistorialPacienteLambdaVersionhXp3cOjyP9AO5fMGElcumfQ57EVUwGQCLva8eIaGPk"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetHistorialPacienteLambdaFunctionQualifiedArn"
@@ -3225,7 +3133,7 @@
     "GetFichaClinicaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetFichaClinicaLambdaVersionpHxkUPNiCyUz4NSsU3DkE9nXNjQSqyrmVsfrLmsiY"
+        "Ref": "GetFichaClinicaLambdaVersionIw2tlBGgcbW0W1a5vTuOPJ4NMYowLVhY1sjc0h21QlM"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetFichaClinicaLambdaFunctionQualifiedArn"
@@ -3234,7 +3142,7 @@
     "RankingProcedimientosLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "RankingProcedimientosLambdaVersionHG8RGi7uQjg6ohS7ev0QX6eZ7aTUIBJp4dvbMoXEEU8"
+        "Ref": "RankingProcedimientosLambdaVersionuRH6c6CxKDr8wK2F9jEYgI0GfGJzf8cOYWbLRMarp0"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-RankingProcedimientosLambdaFunctionQualifiedArn"
@@ -3243,7 +3151,7 @@
     "GetVacunasPacienteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetVacunasPacienteLambdaVersionrPuQVTVv7JToPSj4Ggt8dXPCYbVI8L6mDtSRR3ts"
+        "Ref": "GetVacunasPacienteLambdaVersion020Y18AVMukmKJ0TfwiuHuYr6Ts5jMw4TvVbwRTEPU"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-GetVacunasPacienteLambdaFunctionQualifiedArn"
@@ -3252,7 +3160,7 @@
     "VolumenYGastoPromedioPorMesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "VolumenYGastoPromedioPorMesLambdaVersion7aSubzp39iqt3bg55RP587HIlDXeP3U5MG3Y9drFLI"
+        "Ref": "VolumenYGastoPromedioPorMesLambdaVersionP0FLxzyPSXluMqMmA8GRY2uG2JOgFx4MdPdLL5NaFe8"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-VolumenYGastoPromedioPorMesLambdaFunctionQualifiedArn"
@@ -3261,7 +3169,7 @@
     "DistribucionPorEspecialidadLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DistribucionPorEspecialidadLambdaVersionHvigvR9BOWkyCEhh277eiCKdlnCvacxRCMy0GwqfHY"
+        "Ref": "DistribucionPorEspecialidadLambdaVersionweBMy3zOZT1qWEfmyZCRWxf9HTGOX2EzovaxivffeU"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-DistribucionPorEspecialidadLambdaFunctionQualifiedArn"
@@ -3270,7 +3178,7 @@
     "TopMedicamentosLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "TopMedicamentosLambdaVersion6sqG2Af83lpjsSnNTNwAvURWtXDkN2G5wxf7htpvAk"
+        "Ref": "TopMedicamentosLambdaVersionaiD8sT9GfvGhG8vvad2V32jU0TyBRFIqEeaPQn2ug"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-TopMedicamentosLambdaFunctionQualifiedArn"
@@ -3279,7 +3187,7 @@
     "EvolucionIngresosVsCostesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "EvolucionIngresosVsCostesLambdaVersion7a2StvSVX7BNhvm61oePtRB0BN25Euxz3NeeP2gGnc"
+        "Ref": "EvolucionIngresosVsCostesLambdaVersionffbdXBApKYYMO0D5qlmwGUGhssqO55ag0UNvT2jbM"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-EvolucionIngresosVsCostesLambdaFunctionQualifiedArn"
@@ -3288,7 +3196,7 @@
     "DemandaVacunasPorMesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DemandaVacunasPorMesLambdaVersionmFDITTjppB1fwl3EKt8vjmheniemocu32HyQIWhlzo"
+        "Ref": "DemandaVacunasPorMesLambdaVersiongseAHdDNt86xZjSuGgG0bHiOY5yU5VCkmsexKlkwb0c"
       },
       "Export": {
         "Name": "sls-DynamoTest-dev-DemandaVacunasPorMesLambdaFunctionQualifiedArn"
