@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('../db');
+const { getClient } = require('../app');
 const { v4: uuidv4 } = require('uuid');
 
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
@@ -40,7 +40,7 @@ exports.createPaciente = async (req, res) => {
       });
     }
 
-    const db = await connect();
+    const db = getClient();
     
     const tutorResult = await db.execute(`
       SELECT nombre FROM ${TUTORTABLE} WHERE idTutor = ?
@@ -82,7 +82,7 @@ exports.createPaciente = async (req, res) => {
 
 exports.getPacientes = async (req, res) => {
   try {
-    const db = await connect();
+    const db = getClient();
     
     const result = await db.execute(`SELECT * FROM ${PACIENTETABLE}`);
     const pacientes = result.rows.map(row => ({
@@ -111,7 +111,7 @@ exports.getPacientes = async (req, res) => {
 exports.getPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
     
     const pacienteResult = await db.execute(`
       SELECT * FROM ${PACIENTETABLE} WHERE idPaciente = ?
@@ -156,7 +156,7 @@ exports.updatePaciente = async (req, res) => {
     const { id } = req.params;
     const { nombre, especie, raza, sexo } = req.body;
     
-    const db = await connect();
+    const db = getClient();
     
     const existsResult = await db.execute(`
       SELECT idPaciente FROM ${PACIENTETABLE} WHERE idPaciente = ?

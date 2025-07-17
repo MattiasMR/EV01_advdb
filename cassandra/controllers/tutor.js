@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('../db');
+const { getClient } = require('../app');
 const { v4: uuidv4 } = require('uuid');
 
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
@@ -16,7 +16,7 @@ exports.createTutor = async (req, res) => {
       });
     }
 
-    const db = await connect();
+    const db = getClient();
     const idTutor = uuidv4();
     
     await db.execute(`
@@ -40,7 +40,7 @@ exports.createTutor = async (req, res) => {
 
 exports.getTutores = async (req, res) => {
   try {
-    const db = await connect();
+    const db = getClient();
     
     // En Cassandra necesitamos hacer un scan completo
     const result = await db.execute(`SELECT * FROM ${TUTORTABLE}`);
@@ -71,7 +71,7 @@ exports.getTutores = async (req, res) => {
 exports.getTutor = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
     
     const result = await db.execute(`
       SELECT * FROM ${TUTORTABLE} WHERE idTutor = ?
@@ -109,7 +109,7 @@ exports.updateTutor = async (req, res) => {
     const { id } = req.params;
     const { nombre, email, telefono, direccion } = req.body;
     
-    const db = await connect();
+    const db = getClient();
     
     const existsResult = await db.execute(`
       SELECT idTutor FROM ${TUTORTABLE} WHERE idTutor = ?
@@ -157,7 +157,7 @@ exports.updateTutor = async (req, res) => {
 exports.getPacientesByTutor = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
     
     // Verificar que el tutor existe
     const tutorResult = await db.execute(`

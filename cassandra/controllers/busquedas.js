@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect } = require('../db');
+const { getClient } = require('../app');
 
 const FICHACLINICATABLE = process.env.FICHACLINICATABLE || 'FichaClinica';
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
@@ -9,7 +9,7 @@ const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
 exports.fichaClinicaPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
     
     const result = await db.execute(`
       SELECT * FROM ${FICHACLINICATABLE} 
@@ -80,7 +80,7 @@ exports.rankingProcedimientos = async (req, res) => {
   try {
     const limit = Number(req.query.top) || 5;
     const stats = {};
-    const db = await connect();
+    const db = getClient();
 
     const result = await db.execute(`
       SELECT procedimiento, costo FROM ${FICHACLINICATABLE}
@@ -113,7 +113,7 @@ exports.rankingProcedimientos = async (req, res) => {
 exports.vacunasPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
     
     const result = await db.execute(`
       SELECT vacunas FROM ${FICHACLINICATABLE} 
@@ -140,7 +140,7 @@ exports.vacunasPaciente = async (req, res) => {
 exports.historialPaciente = async (req, res) => {
   try {
     const { id } = req.params;
-    const db = await connect();
+    const db = getClient();
 
     const result = await db.execute(`
       SELECT idTutor, fechaHora, costoConsulta, procedimiento, costo, medicamentos, idMedico
