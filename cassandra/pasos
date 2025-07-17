@@ -1,0 +1,35 @@
+Cassandra:
+https://medium.com/@agustinafassina_92108/install-cassandra-4-1-on-ubuntu-server-22-04-ec2-aws-15a4a730657e
+
+sudo apt-get install openjdk-8-jdk
+
+echo "deb https://debian.cassandra.apache.org 41x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+sudo apt-get update -y
+
+sudo apt-get install cassandra -y
+
+sudo systemctl start cassandra
+
+sudo systemctl enable cassandra
+
+sudo systemctl status cassandra
+
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# cada vez que reinica la instancia pa tener node
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+
+nvm install 18
+npm install
+
+
+mkdir cassandra && cd cassandra/
+
+npm init -y
+
+npm install express morgan dotenv uuid cassandra-driver @faker-js/faker
+
+npm install --save-dev nodemon
