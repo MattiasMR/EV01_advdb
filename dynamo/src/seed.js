@@ -11,7 +11,8 @@ nRegistros = 600 // Número de registros a generar
 const medicamentos = Array.from({ length: 30 }).map(() => ({
   idMedicamento: uuidv4(),
   nombre: faker.science.chemicalElement().name + ' ' +
-          faker.number.int({ min: 10, max: 250 }) + ' mg'
+          faker.number.int({ min: 10, max: 250 }) + ' mg',
+  costo: faker.number.int({ min: 2000, max: 60000 })
 }));
 
 const procedimientos = [

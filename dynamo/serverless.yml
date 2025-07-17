@@ -160,7 +160,42 @@ functions:
             path: /paciente/{id}/vacunas
             method: get
 
+    volumenYGastoPromedioPorMes:
+      handler: src/queriesdashboard.volumenYGastoPromedioPorMes
+      events:
+        - httpApi:
+            path: /dashboard/volumenGastoMensual
+            method: get
+
+    distribucionPorEspecialidad:
+      handler: src/queriesdashboard.distribucionPorEspecialidad
+      events:
+        - httpApi:
+            path: /dashboard/distribucionEspecialidades
+            method: get
+
+    topMedicamentos:
+      handler: src/queriesdashboard.topMedicamentos
+      events:
+        - httpApi:
+            path: /dashboard/topMedicamentos
+            method: get
+
+    evolucionIngresosVsCostes:
+      handler: src/queriesdashboard.evolucionIngresosVsCostes
+      events:
+        - httpApi:
+            path: /dashboard/evolucionIngresoVsCostes
+            method: get
+
+    demandaVacunasPorMes:
+      handler: src/queriesdashboard.demandaVacunasPorMes
+      events:
+        - httpApi:
+            path: /dashboard/demandaVacunasMensual
+            method: get
             
+
 # Creando las tablas
 resources:
   Resources:
@@ -286,4 +321,3 @@ resources:
         KeySchema:
           - AttributeName: idVacuna
             KeyType: HASH
-    
