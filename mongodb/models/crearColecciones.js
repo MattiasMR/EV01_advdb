@@ -1,5 +1,17 @@
 require('dotenv').config();
-const { connect } = require('../app');
+const { MongoClient } = require('mongodb');
+
+// Configuración de la base de datos
+const url = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017';
+const dbName = process.env.DB_NAME || 'veterinaria';
+
+async function connectDB() {
+  const client = new MongoClient(url);
+  await client.connect();
+  const db = client.db(dbName);
+  console.log(`MongoDB conectado a ${dbName}`);
+  return { client, db };
+}
 
 const TUTORTABLE = process.env.TUTORTABLE || 'Tutor';
 const PACIENTETABLE = process.env.PACIENTETABLE || 'Paciente';
@@ -7,9 +19,10 @@ const MEDICOTABLE = process.env.MEDICOTABLE || 'Medico';
 const FICHACLINICATABLE = process.env.FICHACLINICATABLE || 'FichaClinica';
 
 async function crearEstructura() {
-  const db = await connect();
-
+  let client, db;
+  
   try {
+    ({ client, db } = await connectDB());
     const collections = await db.listCollections().toArray();
     const existingCollections = collections.map(c => c.name);
 
@@ -84,8 +97,15 @@ async function crearEstructura() {
     }
     console.log(`   TOTAL: ${totalIndexes} índices`);
 
+    // Cerrar conexión
+    await client.close();
+    console.log('Conexión MongoDB cerrada');
+
   } catch (error) {
     console.error('Error creando estructura:', error);
+    if (client) {
+      await client.close();
+    }
     throw error;
   }
 }
@@ -93,7 +113,7 @@ async function crearEstructura() {
 (async () => {
   try {
     await crearEstructura();
-    console.log('Estructura lista en MongoDB');
+    console.log('Estructura creada exitosamente en MongoDB');
     process.exit(0);
   } catch (error) {
     console.error('Error:', error);

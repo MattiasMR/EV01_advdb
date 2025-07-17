@@ -5,7 +5,6 @@ exports.volumenYGastoPromedioPorMes = async (req, res) => {
     try {
         const client = getClient();
         
-        // En Cassandra, necesitaremos hacer queries más específicas
         // Primero obtenemos todas las fichas clínicas
         const fichasResult = await client.execute('SELECT * FROM FichaClinica');
         
@@ -13,7 +12,6 @@ exports.volumenYGastoPromedioPorMes = async (req, res) => {
         const datosPorMes = {};
         
         fichasResult.rows.forEach(ficha => {
-            // En Cassandra, la fecha puede ser un UUID de tiempo o timestamp
             let fecha;
             if (ficha.fechahora && ficha.fechahora.getTime) {
                 fecha = ficha.fechahora; // Es un objeto Date
@@ -101,7 +99,6 @@ exports.topMedicamentos = async (req, res) => {
             if (ficha.medicamentos && Array.isArray(ficha.medicamentos)) {
                 ficha.medicamentos.forEach(medicamento => {
                     if (medicamento && typeof medicamento === 'string') {
-                        // Los medicamentos en Cassandra son strings como "Thulium 147 mg"
                         // Extraemos solo el nombre del medicamento (antes del espacio y número)
                         const nombreMedicamento = medicamento.split(' ')[0];
                         conteoMedicamentos[nombreMedicamento] = (conteoMedicamentos[nombreMedicamento] || 0) + 1;
@@ -110,7 +107,6 @@ exports.topMedicamentos = async (req, res) => {
             }
         });
         
-        // Convertir a array y ordenar
         const resultado = Object.keys(conteoMedicamentos)
             .map(nombre => ({
                 _id: nombre,
@@ -131,9 +127,14 @@ exports.evolucionIngresosVsCostes = async (req, res) => {
     try {
         const client = getClient();
         
-        // En Cassandra, los datos están en formato diferente
-        // Vamos a usar los datos de costos directamente de las fichas
-        const fichasResult = await client.execute('SELECT fechaHora, costo, costoConsulta FROM FichaClinica');
+        // Primero obtenemos el mapeo de costos de medicamentos
+        const medicamentosResult = await client.execute('SELECT nombre, costo FROM Medicamentos');
+        const medCostMap = {};
+        medicamentosResult.rows.forEach(med => {
+            medCostMap[med.nombre] = parseFloat(med.costo) || 0;
+        });
+        
+        const fichasResult = await client.execute('SELECT fechaHora, costo, costoConsulta, medicamentos FROM FichaClinica');
         
         // Procesamos los datos por mes
         const datosPorMes = {};
@@ -153,25 +154,33 @@ exports.evolucionIngresosVsCostes = async (req, res) => {
             if (!datosPorMes[mes]) {
                 datosPorMes[mes] = {
                     ingresos: 0,
-                    costes: 0
+                    costoMedicamentos: 0
                 };
             }
             
-            // En Cassandra, calculamos el ingreso total como la suma de costo + costoConsulta
-            const costoTotal = (parseFloat(ficha.costo) || 0) + (parseFloat(ficha.costoconsulta) || 0);
-            datosPorMes[mes].ingresos += costoTotal;
+            // Calculamos el ingreso total como la suma de costo + costoConsulta
+            const ingresoTotal = (parseFloat(ficha.costo) || 0) + (parseFloat(ficha.costoconsulta) || 0);
+            datosPorMes[mes].ingresos += ingresoTotal;
             
-            // Para costes, usaremos un 70% del valor como estimación de costes
-            datosPorMes[mes].costes += costoTotal * 0.7;
+            // Calculamos el costo real de los medicamentos usados
+            let costoMeds = 0;
+            if (ficha.medicamentos && Array.isArray(ficha.medicamentos)) {
+                ficha.medicamentos.forEach(medicamento => {
+                    if (medicamento && typeof medicamento === 'string') {
+                        costoMeds += medCostMap[medicamento] || 0;
+                    }
+                });
+            }
+            datosPorMes[mes].costoMedicamentos += costoMeds;
         });
         
         // Convertir a formato de respuesta
         const resultado = Object.keys(datosPorMes).map(mes => ({
-            _id: mes,
+            mes: mes,
             ingresos: parseFloat(datosPorMes[mes].ingresos.toFixed(2)),
-            costes: parseFloat(datosPorMes[mes].costes.toFixed(2)),
-            beneficio: parseFloat((datosPorMes[mes].ingresos - datosPorMes[mes].costes).toFixed(2))
-        })).sort((a, b) => a._id.localeCompare(b._id));
+            costeMeds: parseFloat(datosPorMes[mes].costoMedicamentos.toFixed(2)),
+            ganancia: parseFloat((datosPorMes[mes].ingresos - datosPorMes[mes].costoMedicamentos).toFixed(2))
+        })).sort((a, b) => a.mes.localeCompare(b.mes));
         
         res.json(resultado);
     } catch (error) {

@@ -1,8 +1,23 @@
 
 require('dotenv').config();
-const { connect } = require('../db');
+const cassandra = require('cassandra-driver');
 const { faker } = require('@faker-js/faker');
 const { v4: uuidv4 } = require('uuid');
+
+// Configuración de Cassandra
+const client = new cassandra.Client({
+  contactPoints: [process.env.CASSANDRA_HOST || '127.0.0.1'],
+  localDataCenter: process.env.CASSANDRA_DATACENTER || 'datacenter1',
+  keyspace: process.env.CASSANDRA_KEYSPACE || 'veterinaria'
+});
+
+async function connect() {
+  if (!client.isConnected) {
+    await client.connect();
+    console.log('Cassandra conectado');
+  }
+  return client;
+}
 
 const nRegistros = 600; 
 
@@ -17,7 +32,8 @@ const VACUNASTABLE = process.env.VACUNASTABLE || 'Vacunas';
 const medicamentos = Array.from({ length: 30 }).map(() => ({
   idMedicamento: uuidv4(),
   nombre: faker.science.chemicalElement().name + ' ' +
-          faker.number.int({ min: 10, max: 250 }) + ' mg'
+          faker.number.int({ min: 10, max: 250 }) + ' mg',
+  costo: faker.number.int({ min: 2000, max: 60000 })
 }));
 
 const procedimientos = [
@@ -62,8 +78,9 @@ async function poblarDatos() {
   console.log('Insertando medicamentos...');
   for (const medicamento of medicamentos) {
     await db.execute(
-      `INSERT INTO ${MEDICAMENTOSTABLE} (idMedicamento, nombre) VALUES (?, ?)`,
-      [medicamento.idMedicamento, medicamento.nombre]
+      `INSERT INTO ${MEDICAMENTOSTABLE} (idMedicamento, nombre, costo) VALUES (?, ?, ?)`,
+      [medicamento.idMedicamento, medicamento.nombre, medicamento.costo],
+        { prepare: true }
     );
   }
 
@@ -240,9 +257,16 @@ async function seedCompleto() {
 seedCompleto()
   .then(() => {
     console.log('Base de datos poblada');
+    if (client) {
+      client.shutdown();
+      console.log('Conexión Cassandra cerrada');
+    }
     process.exit(0);
   })
   .catch((error) => {
     console.error('Error:', error);
+    if (client) {
+      client.shutdown();
+    }
     process.exit(1);
   });

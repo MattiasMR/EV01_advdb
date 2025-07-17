@@ -1,15 +1,18 @@
 require('dotenv').config();
-const { connect } = require('../db');
+const cassandra = require('cassandra-driver');
 const fs = require('fs');
 const path = require('path');
 
 async function createKeyspaceAndTables() {
+  let clientWithoutKeyspace;
+  let client;
+  
   try {
     console.log('Creando keyspace y tablas en Cassandra...');
     
-    const cassandra = require('cassandra-driver');
-    const clientWithoutKeyspace = new cassandra.Client({
-      contactPoints: [process.env.CASSANDRA_HOSTS || '127.0.0.1'],
+    // Cliente sin keyspace para crear el keyspace
+    clientWithoutKeyspace = new cassandra.Client({
+      contactPoints: [process.env.CASSANDRA_HOST || '127.0.0.1'],
       localDataCenter: process.env.CASSANDRA_DATACENTER || 'datacenter1',
       protocolOptions: {
         port: parseInt(process.env.CASSANDRA_PORT) || 9042
@@ -33,12 +36,20 @@ async function createKeyspaceAndTables() {
 
     await clientWithoutKeyspace.shutdown();
 
-    const db = await connect();
+    // Cliente con keyspace para crear las tablas
+    client = new cassandra.Client({
+      contactPoints: [process.env.CASSANDRA_HOST || '127.0.0.1'],
+      localDataCenter: process.env.CASSANDRA_DATACENTER || 'datacenter1',
+      keyspace: keyspaceName
+    });
 
-    const schemaPath = path.join(__dirname, '..', 'schema.cql');
+    await client.connect();
+    console.log(`Conectado a Cassandra con keyspace '${keyspaceName}'`);
+
+    const schemaPath = path.join(__dirname, 'schema.cql');
     const schemaContent = fs.readFileSync(schemaPath, 'utf8');
     
-    const query = schemaContent
+    const queries = schemaContent
       .replace(/--[^\n]*/g, '') 
       .replace(/\/\*[\s\S]*?\*\//g, '') 
       .split(';')
@@ -50,70 +61,55 @@ async function createKeyspaceAndTables() {
         !stmt.toLowerCase().startsWith('create keyspace')
       );
 
-    console.log(`Ejecutando ${query.length} queries...`);
-    console.log('Queries a ejecutar:', query.map((s, i) => `${i+1}: ${s.substring(0, 50)}...`));
+    console.log(`Ejecutando ${queries.length} queries...`);
 
-    for (let i = 0; i < query.length; i++) {
-      const q = query[i].trim();
-      if (q) {
+    for (let i = 0; i < queries.length; i++) {
+      const query = queries[i].trim();
+      if (query) {
         try {
-          console.log(`Ejecutando query ${i + 1}: ${q.substring(0, 100)}...`);
-          await db.execute(q);
-          console.log(`Query ${i + 1}/${query.length} ejecutado`);
+          console.log(`Ejecutando query ${i + 1}: ${query.substring(0, 80)}...`);
+          await client.execute(query);
+          console.log(`Query ${i + 1}/${queries.length} ejecutado`);
         } catch (error) {
           if (error.message.includes('already exists')) {
-            console.log(`Query ${i + 1}/${query.length} - ya existe`);
+            console.log(`Query ${i + 1}/${queries.length} - ya existe`);
           } else {
             console.error(`Error en query ${i + 1}:`, error.message);
-            console.error('Query completo:', q);
+            console.error('Query completo:', query);
+            throw error;
           }
         }
       }
     }
 
-    console.log('\n Verificando tablas creadas...');
-    const tablesQuery = `
-      SELECT table_name 
-      FROM system_schema.tables 
-      WHERE keyspace_name = ?
-    `;
+    await client.shutdown();
+    console.log('Conexión cerrada');
+    console.log('Keyspace y tablas creados exitosamente');
     
-    const result = await db.execute(tablesQuery, [keyspaceName]);
-    const tableNames = result.rows.map(row => row.table_name);
-    
-    console.log('Tablas creadas:');
-    tableNames.forEach(name => console.log(`   - ${name}`));
-
-    console.log('\nVerificando índices...');
-    const indexesQuery = `
-      SELECT index_name, table_name
-      FROM system_schema.indexes 
-      WHERE keyspace_name = ?
-    `;
-    
-    const indexResult = await db.execute(indexesQuery, [keyspaceName]);
-    const indexes = indexResult.rows;
-    
-    console.log('Índices creados:');
-    indexes.forEach(idx => console.log(`   - ${idx.index_name} en ${idx.table_name}`));
-
-    console.log('\n Keyspace, tablas e índices creados exitosamente!');
-    console.log(`Total: ${tableNames.length} tablas, ${indexes.length} índices`);
-
   } catch (error) {
     console.error('Error:', error);
+    
+    // Cerrar conexiones si están abiertas
+    if (clientWithoutKeyspace && clientWithoutKeyspace.isConnected) {
+      await clientWithoutKeyspace.shutdown();
+    }
+    if (client && client.isConnected) {
+      await client.shutdown();
+    }
+    
     throw error;
   }
 }
 
+// Ejecutar solo si es llamado directamente
 if (require.main === module) {
   createKeyspaceAndTables()
     .then(() => {
-      console.log('Proceso completado');
+      console.log('Proceso completado exitosamente');
       process.exit(0);
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+      console.error('Error en el proceso:', error);
       process.exit(1);
     });
 }

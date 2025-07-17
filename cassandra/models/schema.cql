@@ -55,7 +55,8 @@ CREATE TABLE IF NOT EXISTS FichaClinica (
 -- Partition Key: idMedicamento
 CREATE TABLE IF NOT EXISTS Medicamentos (
     idMedicamento UUID PRIMARY KEY,
-    nombre TEXT
+    nombre TEXT,
+    costo INT
 );
 
 -- Tabla: Procedimientos 
